@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string.h>
+#include bankAccount.cpp;
 using namespace std;
 
 void Main_Menu_Admin()
@@ -62,6 +63,63 @@ void Main_Menu_Admin()
             break;
         }
     } while (choice != 3);
+}
+int findAccountIndex(string accountID)
+{
+    for (int i = 0; i < bankAccounts.size(); i++)
+        if (bankAccounts[i].accountID == accountID)
+            return i;
+
+    return -1;
+}
+
+float getCash(string accountID, float cash)
+{
+    for (int i = 0; i < bankAccounts.size(); i++)
+    {
+        if (bankAccounts[i].accountID == accountID && bankAccounts[i].status == 1)
+        {
+            if (bankAccounts[i].balance > cash)
+            {
+                bankAccounts[i].balance -= cash;
+                return bankAccounts[i].balance;
+            }
+        }
+    }
+    return -1;
+}
+
+float depositeInAccount(string accountID, float cash)
+{
+    for (int i = 0; i < bankAccounts.size(); i++)
+    {
+        if (bankAccounts[i].accountID == accountID && bankAccounts[i].status == 1)
+        {
+            bankAccounts[i].balance += cash;
+            return bankAccounts[i].balance;
+        }
+    }
+    return -1;
+}
+
+bool makeTransaction(string senderAccountID, string reciverAccountID, float cash)
+{
+    for (int i = 0; i < bankAccounts.size(); i++)
+    {
+        if (bankAccounts[i].senderAccountID == accountID && bankAccounts[i].status == 1 && bankAccounts[i].balance > cash)
+        {
+            for (int j = 0; i < bankAccounts.size(); i++)
+            {
+                if (bankAccounts[i].senderAccountID == accountID && bankAccounts[i].status == 1)
+                {
+                    bankAccounts[i].balance -= cash;
+                    bankAccounts[j].balance += cash;
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
 
 int main()
